@@ -348,7 +348,6 @@ body.dark-theme .feature-card p {
     .feature-card p {
         font-size: 0.85rem;
     }
-<<<<<<< HEAD
 }
 
 /* Стили для надписи "Смена темы" */
@@ -396,6 +395,67 @@ body.dark-theme .user-info h2::after {
 
 body.dark-theme .user-info h2:hover {
     color: #4da6ff;
-=======
->>>>>>> ae2f47cf106b3de3b3ad3d1a3ccfae53ccbc247e
+}
+
+/* Добавить в конец файла style.css */
+
+/* Центрирование имени пользователя */
+.user-info {
+    text-align: center;
+    flex: 1;
+}
+
+.user-info h2 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.5rem;
+}
+
+.user-info p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+/* Обновление структуры профиля для правильного центрирования */
+.user-profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.avatar-container {
+    position: absolute;
+    left: 1.5rem;
+}
+
+.theme-toggle-container {
+    position: absolute;
+    right: 1.5rem;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .user-profile {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .avatar-container {
+        position: static;
+        order: 1;
+    }
+    
+    .user-info {
+        position: static;
+        order: 2;
+        width: 100%;
+    }
+    
+    .theme-toggle-container {
+        position: static;
+        order: 3;
+        margin-top: 1rem;
+    }
 }
