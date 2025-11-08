@@ -250,39 +250,3 @@ body.dark-theme .stat-value {
 body.dark-theme .stat-label {
     color: #b0b0b0;
 }
-
-/* Адаптивность для новых элементов */
-@media (max-width: 768px) {
-    .user-profile {
-        flex-direction: column;
-        text-align: center;
-        padding: 1rem;
-    }
-    
-    .avatar-container {
-        margin-right: 0;
-        margin-bottom: 1rem;
-    }
-    
-    .avatar {
-        width: 70px;
-        height: 70px;
-    }
-    
-    .theme-toggle-container {
-        margin-left: 0;
-        margin-top: 1rem;
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .stat-card {
-        padding: 1rem;
-    }
-    
-    .stat-value {
-        font-size: 1.5rem;
-    }
-}
