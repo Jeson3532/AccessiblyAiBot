@@ -348,4 +348,54 @@ body.dark-theme .feature-card p {
     .feature-card p {
         font-size: 0.85rem;
     }
+<<<<<<< HEAD
+}
+
+/* Стили для надписи "Смена темы" */
+.theme-label {
+    margin-right: 10px;
+    color: #666;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+body.dark-theme .theme-label {
+    color: #b0b0b0;
+}
+
+/* Анимация подчеркивания для имени пользователя */
+.user-info h2 {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.user-info h2::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #0088cc;
+    transition: width 0.3s ease;
+}
+
+body.dark-theme .user-info h2::after {
+    background-color: #4da6ff;
+}
+
+.user-info h2:hover::after {
+    width: 100%;
+}
+
+.user-info h2:hover {
+    color: #0088cc;
+}
+
+body.dark-theme .user-info h2:hover {
+    color: #4da6ff;
+=======
+>>>>>>> ae2f47cf106b3de3b3ad3d1a3ccfae53ccbc247e
 }
