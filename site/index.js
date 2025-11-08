@@ -1,31 +1,130 @@
-// Имитация данных пользователя из Telegram
+// index.js - работа с Telegram Web App API
 document.addEventListener('DOMContentLoaded', function() {
-    // В реальном приложении эти данные будут приходить из Telegram Mini Apps
-    const userData = {
+    // Проверяем, запущены ли мы в Telegram Web App
+    if (window.Telegram && Telegram.WebApp) {
+        initTelegramApp();
+    } else {
+        // Режим разработки - используем тестовые данные
+        initTestMode();
+    }
+    
+    // Инициализация переключателя темы
+    initThemeToggle();
+});
+
+// Инициализация Telegram Web App
+function initTelegramApp() {
+    console.log('🚀 Запущено в Telegram Web App');
+    
+    // Инициализируем Web App
+    Telegram.WebApp.ready();
+    Telegram.WebApp.expand(); // Раскрываем на весь экран
+    
+    // Получаем данные пользователя из Telegram
+    const user = Telegram.WebApp.initDataUnsafe.user;
+    
+    if (user) {
+        // Заполняем данные профиля
+        document.getElementById('user-name').textContent = 
+            `${user.first_name} ${user.last_name || ''}`.trim();
+        document.getElementById('user-username').textContent = 
+            user.username ? `@${user.username}` : 'Пользователь';
+        
+        // Устанавливаем аватар
+        if (user.photo_url) {
+            document.getElementById('user-avatar').src = user.photo_url;
+        } else {
+            // Создаем аватар с инициалами
+            createAvatarFromName(user.first_name, user.last_name);
+        }
+        
+        // Загружаем статистику (в реальном приложении - с сервера)
+        loadUserStats(user.id);
+    } else {
+        setFallbackData();
+    }
+}
+
+// Режим разработки (вне Telegram)
+function initTestMode() {
+    console.log('🔧 Режим разработки');
+    
+    // Тестовые данные пользователя
+    const testUser = {
         id: 123456789,
-        firstName: "Иван",
-        lastName: "Петров",
-        username: "ivan_petrov",
-        photoUrl: "https://via.placeholder.com/100/0088cc/ffffff?text=IP"
+        first_name: "Иван",
+        last_name: "Петров",
+        username: "ivan_petrov"
     };
     
-    // Заполняем данные профиля
-    document.getElementById('user-name').textContent = `${userData.firstName} ${userData.lastName}`;
-    document.getElementById('user-username').textContent = `@${userData.username}`;
-    document.getElementById('user-avatar').src = userData.photoUrl;
+    document.getElementById('user-name').textContent = 
+        `${testUser.first_name} ${testUser.last_name}`;
+    document.getElementById('user-username').textContent = `@${testUser.username}`;
     
-    // Имитация статистики (в реальном приложении данные будут из базы)
-    const stats = {
-        completedTasks: 42,
-        successRate: 85,
-        rating: 4.7
-    };
+    // Создаем аватар с инициалами
+    createAvatarFromName(testUser.first_name, testUser.last_name);
     
-    document.getElementById('completed-tasks').textContent = stats.completedTasks;
-    document.getElementById('success-rate').textContent = `${stats.successRate}%`;
-    document.getElementById('rating').textContent = stats.rating;
+    // Тестовая статистика
+    setFallbackStats();
+}
+
+// Создание аватара с инициалами
+function createAvatarFromName(firstName, lastName) {
+    const initials = (firstName[0] + (lastName ? lastName[0] : '')).toUpperCase();
+    const colors = ['#0088cc', '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57'];
+    const color = colors[initials.charCodeAt(0) % colors.length];
     
-    // Обработчик переключения темы
+    const svg = `
+        <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" fill="${color}"/>
+            <text x="50" y="50" font-family="Arial" font-size="40" fill="white" 
+                  text-anchor="middle" dy=".3em">${initials}</text>
+        </svg>
+    `;
+    
+    document.getElementById('user-avatar').src = 
+        'data:image/svg+xml;base64,' + btoa(svg);
+}
+
+// Загрузка статистики пользователя
+async function loadUserStats(userId) {
+    try {
+        // В реальном приложении здесь был бы запрос к вашему API
+        // const response = await fetch(`/api/stats/${userId}`);
+        // const stats = await response.json();
+        
+        // Для демонстрации используем случайные данные
+        const stats = {
+            completed_tasks: Math.floor(Math.random() * 100) + 20,
+            success_rate: Math.floor(Math.random() * 30) + 70,
+            rating: (Math.random() * 2 + 3).toFixed(1)
+        };
+        
+        document.getElementById('completed-tasks').textContent = stats.completed_tasks;
+        document.getElementById('success-rate').textContent = `${stats.success_rate}%`;
+        document.getElementById('rating').textContent = stats.rating;
+        
+    } catch (error) {
+        console.error('Ошибка загрузки статистики:', error);
+        setFallbackStats();
+    }
+}
+
+// Запасные данные
+function setFallbackData() {
+    document.getElementById('user-name').textContent = 'Пользователь';
+    document.getElementById('user-username').textContent = '@username';
+    createAvatarFromName('П', '');
+}
+
+function setFallbackStats() {
+    document.getElementById('completed-tasks').textContent = '42';
+    document.getElementById('success-rate').textContent = '85%';
+    document.getElementById('rating').textContent = '4.7';
+}
+
+// Инициализация переключателя темы
+function initThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
     
     // Проверяем сохраненную тему
@@ -33,6 +132,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (savedTheme === 'dark') {
         document.body.classList.add('dark-theme');
         themeToggle.checked = true;
+    }
+    
+    // Синхронизируем с темой Telegram, если доступно
+    if (window.Telegram && Telegram.WebApp) {
+        const tgTheme = Telegram.WebApp.colorScheme;
+        if (tgTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            themeToggle.checked = true;
+            localStorage.setItem('theme', 'dark');
+        }
     }
     
     themeToggle.addEventListener('change', function() {
@@ -44,4 +153,4 @@ document.addEventListener('DOMContentLoaded', function() {
             localStorage.setItem('theme', 'light');
         }
     });
-});
+}
