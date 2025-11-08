@@ -11,7 +11,7 @@ router = Router()
 
 @router.message(CommandStart())
 async def cmd_menu(message: Message):
-    await message.answer(text=consts.START_MESSAGE)
+    await message.answer(text="123")
 
 
 @router.message(F.data == 'profile')
@@ -20,7 +20,7 @@ async def profle_message(message: Message):
 
 @router.message(F.data == 'mini-app')
 async def profle_message(message: Message):
-    webAppInfo = WebAppInfo(url="loaclhost:8080")
+    webAppInfo = WebAppInfo(url="localhost:8080")
     builder = ReplyKeyboardBuilder()
     builder.add(KeyboardButton(text='Отправить данные', web_app=webAppInfo))
     await message.answer(text='Привет!', reply_markup=builder.as_markup())
@@ -28,7 +28,6 @@ async def profle_message(message: Message):
 @router.message(F.data == 'courses')
 async def profle_message(message: Message):
     await message.answer(text="test")
-
 
 @router.message(F.data == 'test')
 async def profle_message(message: Message):
