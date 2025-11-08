@@ -282,3 +282,70 @@ footer {
 .form-group input:invalid:not(:placeholder-shown) {
     border-color: #e74c3c;
 }
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.feature-card {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 4px solid #0088cc;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+body.dark-theme .feature-card {
+    background: #363636;
+    border-left: 4px solid #4da6ff;
+}
+
+.feature-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card h3 {
+    color: #0088cc;
+    margin-bottom: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+body.dark-theme .feature-card h3 {
+    color: #4da6ff;
+}
+
+.feature-card p {
+    color: #666;
+    line-height: 1.4;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+body.dark-theme .feature-card p {
+    color: #b0b0b0;
+}
+
+/* Адаптивность для сетки */
+@media (max-width: 768px) {
+    .features-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .feature-card {
+        padding: 1.2rem;
+    }
+    
+    .feature-card h3 {
+        font-size: 1rem;
+    }
+    
+    .feature-card p {
+        font-size: 0.85rem;
+    }
+}
