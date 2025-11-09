@@ -5,8 +5,10 @@ from aiogram import Dispatcher, Bot
 from bot.handlers.message import router as message_router
 from bot.handlers import routers
 from bot.entry.config import BOT_TOKEN, DEBUG_MODE
+
 bot = Bot(BOT_TOKEN)
 dp = Dispatcher()
+
 
 async def bot_start_polling():
     dp.include_routers(*routers)

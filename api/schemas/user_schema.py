@@ -3,6 +3,7 @@ from pydantic_extra_types.phone_numbers import PhoneNumber
 from api.roles.role import UserRoles
 from typing import Optional
 
+
 class AddUserModel(BaseModel):
     telegram_id: int
     first_name: Optional[str] = Field(default=None)
@@ -12,3 +13,9 @@ class AddUserModel(BaseModel):
     role: UserRoles = Field(default=UserRoles.USER)
 
     model_config = ConfigDict(arbitrary_types_allowed=True, from_attributes=True)
+
+
+class UpdateCompProfile(BaseModel):
+    telegram_id: int = Field(...)
+    student: str = Field(...)
+    profile: str = Field(...)

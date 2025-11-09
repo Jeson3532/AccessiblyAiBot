@@ -5,6 +5,7 @@ import json
 from database.config import DBConfig
 from dotenv import load_dotenv
 from utils.logger import logger
+
 load_dotenv()
 
 # Объект класса с конфигурацией
@@ -49,6 +50,46 @@ class Users(Base):
     email: Mapped[str] = mapped_column(unique=True, nullable=True)
     phone: Mapped[str] = mapped_column(unique=True, nullable=True)
     role: Mapped[str] = mapped_column(comment="Роль участника в системе")
+
+    @classmethod
+    async def create_table(cls):
+        async with engine.begin() as connect:
+            logger.info(f"Создаю базу данных {cls.__tablename__}...")
+            await connect.run_sync(
+                lambda sync_conn: cls.metadata.drop_all(sync_conn, tables=[cls.__table__])
+            )
+            await connect.run_sync(
+                lambda sync_conn: cls.metadata.create_all(sync_conn, tables=[cls.__table__])
+            )
+            logger.info("База данных создана!")
+
+
+class UsersProfileComp(Base):
+    __tablename__ = "users_profile_comp"
+    id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    telegram_id: Mapped[int] = mapped_column(nullable=False)
+    student: Mapped[str] = mapped_column(comment="Имя студента", unique=True)
+    profile: Mapped[str] = mapped_column(TEXT, nullable=False)
+
+    @classmethod
+    async def create_table(cls):
+        async with engine.begin() as connect:
+            logger.info(f"Создаю базу данных {cls.__tablename__}...")
+            await connect.run_sync(
+                lambda sync_conn: cls.metadata.drop_all(sync_conn, tables=[cls.__table__])
+            )
+            await connect.run_sync(
+                lambda sync_conn: cls.metadata.create_all(sync_conn, tables=[cls.__table__])
+            )
+            logger.info("База данных создана!")
+
+
+class Materials(Base):
+    __tablename__ = "materials"
+    id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
+    telegram_id: Mapped[int] = mapped_column(nullable=False)
+    material_name: Mapped[str] = mapped_column(nullable=False, unique=True)
+    material: Mapped[str] = mapped_column(TEXT, nullable=False)
 
     @classmethod
     async def create_table(cls):

@@ -1,6 +1,9 @@
 from PyPDF2 import PdfReader
 from docx import Document
+import io
 from ai_agent.yandex_gpt import generate_theme_blocks
+
+
 # path = "../files/new_document.pdf"
 
 
@@ -12,9 +15,10 @@ def read_pdf(bytes_):
         text += page.extract_text()
     return text
 
-def read_docx(path_docs: str):
-    doc = Document(path_docs)
+
+def read_docx(file_stream: io.BytesIO):
+    doc = Document(file_stream)
     text = str()
     for para in doc.paragraphs:
         text += para.text
-
+    return text

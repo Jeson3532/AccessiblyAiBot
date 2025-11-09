@@ -3,9 +3,13 @@ from starlette.responses import FileResponse
 from typing import Union
 
 
-class FailedResponse(BaseModel):
-    status_code: int = Field(...)
-    detail: Union[str, dict] = Field(...)
-class SuccessResponse(BaseModel):
-    status_code: int = Field(200)
-    data: Union[str, dict] = Field(None)
+class SuccessResponse:
+    def __init__(self, status_code=200, data=None):
+        self.status_code = status_code
+        self.data = data
+
+
+class FailedResponse:
+    def __init__(self, status_code=400, detail=None):
+        self.status_code = status_code
+        self.detail = detail
