@@ -2,11 +2,6 @@ import re
 
 
 def check_html_tags(text: str) -> bool:
-    """
-    Проверяет, что все HTML-теги закрыты корректно.
-    Работает с простыми тегами <b>, <i>, <u> и т.д.
-    """
-    # Находим все открывающие и закрывающие теги
     tags = re.findall(r'<(/?)([a-zA-Z0-9]+)>', text)
     stack = []
 
@@ -24,8 +19,5 @@ def check_html_tags(text: str) -> bool:
 
 
 def remove_html_tags(text: str) -> str:
-    """
-    Удаляет все HTML-теги из текста.
-    """
     clean_text = re.sub(r'<[^>]+>', '', text)
     return clean_text

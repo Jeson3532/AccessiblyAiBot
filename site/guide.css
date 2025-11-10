@@ -77,10 +77,6 @@ body.dark-theme .user-profile {
     border-left: 4px solid #4da6ff;
 }
 
-.avatar-container {
-    margin-right: 1.5rem;
-}
-
 .avatar {
     width: 80px;
     height: 80px;
@@ -249,4 +245,74 @@ body.dark-theme .stat-value {
 
 body.dark-theme .stat-label {
     color: #b0b0b0;
+}
+
+/* Стили для сообщения об отсутствии учеников */
+.no-students-message {
+    text-align: center;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 2px dashed #ccc;
+    margin: 2rem 0;
+}
+
+body.dark-theme .no-students-message {
+    background: #363636;
+    border: 2px dashed #666;
+}
+
+.message-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.no-students-message h3 {
+    color: #0088cc;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+body.dark-theme .no-students-message h3 {
+    color: #4da6ff;
+}
+
+.no-students-message p {
+    color: #666;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+body.dark-theme .no-students-message p {
+    color: #b0b0b0;
+}
+
+.message-note {
+    font-size: 0.9rem !important;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.btn-icon {
+    font-size: 1rem;
+}
+
+/* Обновленные стили для заголовка сообщения */
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.message-header h3 {
+    margin: 0;
+    color: #0088cc;
+    font-size: 1.3rem;
+}
+
+body.dark-theme .message-header h3 {
+    color: #4da6ff;
 }

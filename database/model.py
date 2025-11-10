@@ -2,6 +2,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import TEXT, ARRAY, String, TypeDecorator
 import json
+from sqlalchemy.types import BigInteger
 from database.config import DBConfig
 from dotenv import load_dotenv
 from utils.logger import logger
@@ -44,7 +45,7 @@ class Base(DeclarativeBase):
 class Users(Base):
     __tablename__ = "users"
 
-    telegram_id: Mapped[int] = mapped_column(primary_key=True, nullable=False, unique=True)
+    telegram_id: Mapped[int] = mapped_column(BigInteger, primary_key=True, nullable=False, unique=True)
     first_name: Mapped[str] = mapped_column(nullable=True)
     last_name: Mapped[str] = mapped_column(nullable=True)
     email: Mapped[str] = mapped_column(unique=True, nullable=True)
@@ -67,7 +68,7 @@ class Users(Base):
 class UsersProfileComp(Base):
     __tablename__ = "users_profile_comp"
     id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    telegram_id: Mapped[int] = mapped_column(nullable=False)
+    telegram_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
     student: Mapped[str] = mapped_column(comment="Имя студента", unique=True)
     profile: Mapped[str] = mapped_column(TEXT, nullable=False)
 
@@ -87,7 +88,7 @@ class UsersProfileComp(Base):
 class Materials(Base):
     __tablename__ = "materials"
     id: Mapped[int] = mapped_column(primary_key=True, nullable=False)
-    telegram_id: Mapped[int] = mapped_column(nullable=False)
+    telegram_id: Mapped[int] = mapped_column(BigInteger, nullable=False)
     material_name: Mapped[str] = mapped_column(nullable=False, unique=True)
     material: Mapped[str] = mapped_column(TEXT, nullable=False)
 

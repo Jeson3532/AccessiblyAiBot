@@ -118,9 +118,9 @@ function setFallbackData() {
 }
 
 function setFallbackStats() {
-    document.getElementById('completed-tasks').textContent = '42';
-    document.getElementById('success-rate').textContent = '85%';
-    document.getElementById('rating').textContent = '4.7';
+    document.getElementById('completed-tasks').textContent = '0';
+    document.getElementById('success-rate').textContent = '0';
+    document.getElementById('rating').textContent = '0';
 }
 
 // Инициализация переключателя темы
@@ -153,4 +153,90 @@ function initThemeToggle() {
             localStorage.setItem('theme', 'light');
         }
     });
+}
+
+// Функция для копирования ссылки-приглашения
+function copyInviteLink() {
+    let inviteLink = "https://t.me/LearningTrajectoryBot?start=invite";
+    
+    // В реальном приложении можно генерировать уникальную ссылку для каждого учителя
+    if (window.Telegram && Telegram.WebApp) {
+        const user = Telegram.WebApp.initDataUnsafe.user;
+        if (user && user.id) {
+            inviteLink = `https://t.me/LearningTrajectoryBot?start=invite_${user.id}`;
+        }
+    }
+    
+    // Копирование в буфер обмена
+    navigator.clipboard.writeText(inviteLink).then(() => {
+        showNotification('Ссылка скопирована в буфер обмена!');
+    }).catch(err => {
+        console.error('Ошибка копирования: ', err);
+        // Fallback для старых браузеров
+        fallbackCopyTextToClipboard(inviteLink);
+    });
+}
+
+// Функция для показа уведомления
+function showNotification(message) {
+    // Создаем элемент уведомления
+    const notification = document.createElement('div');
+    notification.textContent = message;
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #28a745;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        animation: slideIn 0.3s ease;
+    `;
+    
+    // Добавляем стили для анимации
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(notification);
+    
+    // Удаляем уведомление через 3 секунды
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+            document.head.removeChild(style);
+        }, 300);
+    }, 3000);
+}
+
+// Fallback для копирования в старых браузерах
+function fallbackCopyTextToClipboard(text) {
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.cssText = "position: fixed; left: -9999px; opacity: 0;";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+        const successful = document.execCommand('copy');
+        if (successful) {
+            showNotification('Ссылка скопирована в буфер обмена!');
+        } else {
+            showNotification('Не удалось скопировать ссылку');
+        }
+    } catch (err) {
+        console.error('Ошибка копирования: ', err);
+        showNotification('Ошибка при копировании ссылки');
+    }
+    
+    document.body.removeChild(textArea);
 }

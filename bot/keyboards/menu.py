@@ -6,7 +6,7 @@ from bot.enums import consts
 def get_start_keyboard():
     keyboard = [
         [InlineKeyboardButton(text="👤 Мои студенты", callback_data="profile_menu"),
-        InlineKeyboardButton(text="📚 Мои материалы", callback_data="materials_menu"),],
+         InlineKeyboardButton(text="📚 Мои материалы", callback_data="materials_menu"), ],
         [InlineKeyboardButton(text="📈 Анализатор тестов", callback_data="analyz_menu"),
          InlineKeyboardButton(text="🔍 Парсер документов", callback_data="parser_menu")],
         [InlineKeyboardButton(text="🧩 Генерация контента", callback_data="generate_content_menu")]

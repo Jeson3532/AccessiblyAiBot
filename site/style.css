@@ -87,22 +87,6 @@ main {
   transform: translateY(0);
 }
 
-/* Footer */
-footer {
-  background: #f8f9fa;
-  padding: 1.5rem 0;
-  margin-top: auto;
-  border-top: 1px solid #e1e5e9;
-}
-
-.footer-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #666666;
-  text-align: center;
-}
-
 /* Стили для скроллбара (опционально) */
 ::-webkit-scrollbar {
   width: 6px;

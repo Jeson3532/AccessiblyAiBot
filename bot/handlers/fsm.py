@@ -49,7 +49,8 @@ async def _(message: Message, state: FSMContext):
         html_response = html.check_html_tags(response_model)
 
         if html_response:
-            filename = f"Профиль компетенций от {datetime.now(tz=timezone.utc).strftime("%d.%m.%Y %H:%M")} UTC.txt"
+            dt = datetime.now(tz=timezone.utc).strftime("%d.%m.%Y %H:%M")
+            filename = f"Профиль компетенций от {dt} UTC.txt"
             await state.update_data({"download_text": html.remove_html_tags(response_model)})
             await state.update_data({"download_filename": filename})
             return await message.answer(text=response_model, parse_mode="html",
@@ -86,8 +87,8 @@ async def _(message: Message, state: FSMContext):
     elif file_name.endswith(".docx"):
         content = parser.read_docx(file_bytes)
         response = generate_theme_blocks(content)
-
-    filename = f"Обучающий материал от {datetime.now(tz=timezone.utc).strftime("%d.%m.%Y %H:%M")} UTC.txt"
+    dt = datetime.now(tz=timezone.utc).strftime("%d.%m.%Y %H:%M")
+    filename = f"Обучающий материал от {dt} UTC.txt"
     await state.update_data({"download_text": response.replace("```", "")})
     await state.update_data({"download_filename": filename})
     return await message.answer(text=response, parse_mode="markdown",

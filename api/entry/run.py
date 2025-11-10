@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from database import model as dbs
 import asyncio
-app = FastAPI(title="Образоательная платформа")
+app = FastAPI(title="Образовательная платформа")
 
 async def create_tables():
     await dbs.Users.create_table()

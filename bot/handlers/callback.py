@@ -13,8 +13,6 @@ from database.methods import Users, UserCompMethods, MaterialMethods
 router = Router()
 
 
-
-
 @router.callback_query(F.data == 'profile_menu')
 async def _(cb: CallbackQuery, state: FSMContext):
     await cb.message.delete()
@@ -29,6 +27,7 @@ async def _(cb: CallbackQuery, state: FSMContext):
     message = f"<b>👨‍🎓 Ваши текущие студенты:</b>\n {format_names}"
     message += "\n\n💡 Для получения информации о профиле студента воспользуйтесь командой <b>/get Имя студента </b>"
     await cb.message.answer(text=message, parse_mode="html", reply_markup=menu.get_back_keyboard())
+
 
 @router.callback_query(F.data == 'materials_menu')
 async def _(cb: CallbackQuery, state: FSMContext):
@@ -140,6 +139,7 @@ async def document_msg(cb: CallbackQuery, state: FSMContext):
     await state.set_state(Page.enter_username_student)
     await cb.message.answer(text="<b>Придумайте уникальное имя этому студенту:</b>", parse_mode="html",
                             reply_markup=menu.get_cancel_keyboard())
+
 
 @router.callback_query(F.data == 'save_material')
 async def document_msg(cb: CallbackQuery, state: FSMContext):
