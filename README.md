@@ -58,7 +58,7 @@ PORT=5432
 DBNAME=new_db
 
 # Безопасность
-SECRET_KEY=kQLsKWM23*MSlq@Wvn] # Если требуется - можете сменить
+SECRET_KEY=kQLsKWM23*MSlq@Fvn] # Если требуется - можете сменить
 # Yandex GPT
 AI_FOLDER_ID=Folder ID Yandex Cloud
 AI_TOKEN=Токен Yandex Cloud
